@@ -1,5 +1,5 @@
 /*
- * This file is Copyright Daniel Silverstone <dsilvers@digital-scurf.org> 2006
+ * This file is Copyright Daniel Silverstone <dsilvers@digital-scurf.org> 2006,2015
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -42,6 +42,8 @@ main( int argc, char **argv )
   unsigned char* sharenrs = (unsigned char*)strdup("012");
   gfshare_ctx *G;
   
+  gfshare_fill_rand = gfshare_bad_idea_but_fill_rand_using_random;
+
   /* Stage 1, make a secret */
   for( i = 0; i < 512; ++i )
     secret[i] = (random() & 0xff00) >> 8;

@@ -1,5 +1,5 @@
 /*
- * This file is Copyright Daniel Silverstone <dsilvers@digital-scurf.org> 2006
+ * This file is Copyright Daniel Silverstone <dsilvers@digital-scurf.org> 2006,2015
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -54,8 +54,9 @@ _gfshare_fill_rand_using_random( unsigned char* buffer,
                                            * are
                                            */
 }
-
-gfshare_rand_func_t gfshare_fill_rand = _gfshare_fill_rand_using_random;
+const gfshare_rand_func_t gfshare_bad_idea_but_fill_rand_using_random =
+	_gfshare_fill_rand_using_random;
+gfshare_rand_func_t gfshare_fill_rand = NULL;
 
 /* ------------------------------------------------------[ Preparation ]---- */
 

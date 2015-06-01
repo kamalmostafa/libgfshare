@@ -1,10 +1,14 @@
 .\" This is the man page for libgfshare
-.TH LIBGFSHARE "5" "February 2006" "@PACKAGE_VERSION@" "Shamir Secret Sharing in gf(2**8)"
+.TH LIBGFSHARE "5" "June 2015" "@PACKAGE_VERSION@" "Shamir Secret Sharing in gf(2**8)"
 .SH NAME
 gfshare_ctx_init_enc, etc. \- Shamir Secret Sharing
 .SH SYNOPSIS
 .nf
 .B #include <libgfshare.h>
+.sp
+.BI "gfshare_rand_func_t gfshare_fill_rand;"
+.sp
+.BI "gfshare_rand_func_t gfshare_bad_idea_but_fill_rand_using_random;"
 .sp
 .BI "gfshare_ctx *gfshare_ctx_init_enc( unsigned char *" sharenrs ,
 .br
@@ -46,6 +50,29 @@ gfshare_ctx_init_enc, etc. \- Shamir Secret Sharing
 .br
 .BI "                              unsigned char *" secretbuf " );"
 .SH DESCRIPTION
+The
+.BR gfshare_fill_rand
+variable must contain a pointer to a function which takes an
+.BR unsigned
+.BR char
+.BR *
+and an
+.BR unsigned
+.BR int
+and fills the given buffer with the given number of random bytes before
+calling any of the functions which create or populate contexts.
+.br
+If you cannot do this with a cryptographically secure mechanism then
+the library provides the
+.BR gfshare_bad_idea_but_fill_rand_using_random
+value which you can put into
+.BR gfshare_fill_rand
+and which will use the C library function
+.BR random ()
+to fill the buffer.  You should ensure you call
+.BR srandom ()
+at least once before using any of the other functions though.
+.PP
 The
 .BR gfshare_ctx_init_enc ()
 function returns a context object which can be used for encoding
@@ -129,7 +156,7 @@ Written by Daniel Silverstone.
 .SH "REPORTING BUGS"
 Report bugs against the libgfshare product on www.launchpad.net.
 .SH COPYRIGHT
-Copyright \(co 2006 Daniel Silverstone.
+Copyright \(co 2006,2015 Daniel Silverstone.
 .br
 This is free software. You may redistribute copies of it under the terms of the MIT licence (the COPYRIGHT file in the source distribution).
 There is NO WARRANTY, to the extent permitted by law.

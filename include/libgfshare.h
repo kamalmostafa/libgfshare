@@ -1,5 +1,5 @@
 /*
- * This file is Copyright Daniel Silverstone <dsilvers@digital-scurf.org> 2006
+ * This file is Copyright Daniel Silverstone <dsilvers@digital-scurf.org> 2006,2015
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -31,10 +31,16 @@ typedef struct _gfshare_ctx gfshare_ctx;
 
 typedef void (*gfshare_rand_func_t)(unsigned char*, unsigned int);
 
-/* This will, by default, use random(). It's not very good so you should
- * replace it (perhaps with a function which reads from /dev/urandom).
- * If you can't be bothered, be sure to srandom() before you use any
- * of the gfshare_ctx_enc_* functions
+/* This will, use random(). It's not very good so you should not use it unless
+ * you must.  If you can't be bothered to write your own, be sure to srandom()
+ * before you use any of the gfshare_ctx_enc_* functions
+ */
+extern const gfshare_rand_func_t gfshare_bad_idea_but_fill_rand_using_random;
+/* This must be filled out before running any of the gfshare_ctx_enc_* calls
+ * or bad things will happen since it is initialised to NULL be default.
+ * You should fill this with a routine which uses urandom or similar ideally.
+ * If you cannot do that on your platform, you can use the function provided
+ * which does random() calls, but I recommend against it unless you must.
  */
 extern gfshare_rand_func_t gfshare_fill_rand;
 
