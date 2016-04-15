@@ -165,8 +165,9 @@ main( int argc, char **argv )
     gfshare_fill_rand = gfsplit_fill_rand;
   } else {
     fprintf(stderr, "\
-%s: Cannot access /dev/urandom, so using rand() instead (not secure!)\n\
+%s: Cannot access /dev/urandom, so using random() instead (not secure!)\n\
 ", progname);
+    gfshare_fill_rand = gfshare_bad_idea_but_fill_rand_using_random;
   }
   
   while( (optnr = getopt(argc, argv, OPTSTRING)) != -1 ) {
